@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.17.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Middleware : 中介軟體，只發出 HTTP 請求後，至應用程式收到回應前，處理特定用途的程式。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Backend - Middleware">
+<meta property="og:url" content="http://example.com/2023/06/08/Backend-Middleware/index.html">
+<meta property="og:site_name" content="Feng&#39;s Blog">
+<meta property="og:description" content="Middleware : 中介軟體，只發出 HTTP 請求後，至應用程式收到回應前，處理特定用途的程式。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-06-08T07:36:24.000Z">
+<meta property="article:modified_time" content="2023-06-14T14:30:02.494Z">
+<meta property="article:author" content="Sheng Feng Chang">
+<meta property="article:tag" content="Node.js">
+<meta property="article:tag" content="Express.js">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2023/06/08/Backend-Middleware/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/06/08/Backend-Middleware/","path":"2023/06/08/Backend-Middleware/","title":"Backend - Middleware"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Backend - Middleware | Feng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Feng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Middleware"><span class="nav-number">1.</span> <span class="nav-text">Middleware</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#logger-js"><span class="nav-number">1.1.</span> <span class="nav-text">logger.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#errorHandler-js"><span class="nav-number">1.2.</span> <span class="nav-text">errorHandler.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cookie-parser"><span class="nav-number">1.3.</span> <span class="nav-text">cookie-parser</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CORS"><span class="nav-number">1.4.</span> <span class="nav-text">CORS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%95%9F%E7%94%A8-Middleware"><span class="nav-number">1.5.</span> <span class="nav-text">啟用 Middleware</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Sheng Feng Chang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/fan94105" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;fan94105" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/06/08/Backend-Middleware/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Sheng Feng Chang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Backend - Middleware | Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Backend - Middleware
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-06-08 15:36:24" itemprop="dateCreated datePublished" datetime="2023-06-08T15:36:24+08:00">2023-06-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-06-14 22:30:02" itemprop="dateModified" datetime="2023-06-14T22:30:02+08:00">2023-06-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/MERN/" itemprop="url" rel="index"><span itemprop="name">MERN</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/MERN/Backend/" itemprop="url" rel="index"><span itemprop="name">Backend</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Middleware : 中介軟體，只發出 HTTP 請求後，至應用程式收到回應前，處理特定用途的程式。</p>
+<span id="more"></span>
+
+<h1 id="Middleware"><a href="#Middleware" class="headerlink" title="Middleware"></a>Middleware</h1><p>安裝 date-fns 與 uuid :</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i date-fns uuid</span><br></pre></td></tr></table></figure>
+
+<h2 id="logger-js"><a href="#logger-js" class="headerlink" title="logger.js"></a>logger.js</h2><p>創建 logger.js，紀錄請求。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// middleware/logger.js</span></span><br><span class="line"><span class="keyword">const</span> &#123; format &#125; = <span class="built_in">require</span>(<span class="string">&quot;date-fns&quot;</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; <span class="attr">v4</span>: uuid &#125; = <span class="built_in">require</span>(<span class="string">&quot;uuid&quot;</span>)</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&quot;fs&quot;</span>)</span><br><span class="line"><span class="keyword">const</span> fsPromises = <span class="built_in">require</span>(<span class="string">&quot;fs&quot;</span>).<span class="property">promises</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">logEvent</span> = <span class="keyword">async</span> (<span class="params">message, logFileName</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> dateTime = <span class="title function_">format</span>(<span class="keyword">new</span> <span class="title class_">Date</span>(), <span class="string">&quot;yyyyMMdd\tHH:mm:ss&quot;</span>)</span><br><span class="line">  <span class="keyword">const</span> logItem = <span class="string">`<span class="subst">$&#123;dateTime&#125;</span>\t<span class="subst">$&#123;uuid()&#125;</span>\t<span class="subst">$&#123;message&#125;</span>\n`</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 若 logs 檔案不存在，則創建 logs</span></span><br><span class="line">    <span class="keyword">if</span> (!fs.<span class="title function_">existsSync</span>(path.<span class="title function_">join</span>(__dirname, <span class="string">&quot;..&quot;</span>, <span class="string">&quot;logs&quot;</span>))) &#123;</span><br><span class="line">      <span class="keyword">await</span> fsPromises.<span class="title function_">mkdir</span>(path.<span class="title function_">join</span>(__dirname, <span class="string">&quot;..&quot;</span>, <span class="string">&quot;logs&quot;</span>))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">await</span> fsPromises.<span class="title function_">appendFile</span>(</span><br><span class="line">      path.<span class="title function_">join</span>(__dirname, <span class="string">&quot;..&quot;</span>, <span class="string">&quot;logs&quot;</span>, logFileName),</span><br><span class="line">      logItem</span><br><span class="line">    )</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(err)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">logger</span> = (<span class="params">req, res, next</span>) =&gt; &#123;</span><br><span class="line">  <span class="comment">// 生成請求紀錄</span></span><br><span class="line">  <span class="title function_">logEvent</span>(<span class="string">`<span class="subst">$&#123;req.method&#125;</span>\t<span class="subst">$&#123;req.url&#125;</span>\t<span class="subst">$&#123;req.headers.origin&#125;</span>`</span>, <span class="string">&quot;reqLog.log&quot;</span>)</span><br><span class="line">  <span class="title function_">next</span>()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  logEvent,</span><br><span class="line">  logger,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="errorHandler-js"><a href="#errorHandler-js" class="headerlink" title="errorHandler.js"></a>errorHandler.js</h2><p>創建 errorHandler.js，處理錯誤並記錄。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// middleware/errorHandler.js</span></span><br><span class="line"><span class="keyword">const</span> &#123; logEvent &#125; = <span class="built_in">require</span>(<span class="string">&quot;./logger&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">errorHandler</span> = (<span class="params">err, req, res, next</span>) =&gt; &#123;</span><br><span class="line">  <span class="comment">// 生成錯誤紀錄</span></span><br><span class="line">  <span class="title function_">logEvent</span>(</span><br><span class="line">    <span class="string">`<span class="subst">$&#123;err.name&#125;</span>: <span class="subst">$&#123;err.message&#125;</span>\t<span class="subst">$&#123;req.method&#125;</span>\t<span class="subst">$&#123;req.url&#125;</span>\t<span class="subst">$&#123;req.headers.origin&#125;</span>`</span>,</span><br><span class="line">    <span class="string">&quot;errLog.log&quot;</span></span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> status = res.<span class="property">statusCode</span> ? res.<span class="property">statusCode</span> : <span class="number">500</span> <span class="comment">// server error</span></span><br><span class="line"></span><br><span class="line">  res.<span class="title function_">status</span>(status)</span><br><span class="line"></span><br><span class="line">  res.<span class="title function_">json</span>(&#123; <span class="attr">message</span>: err.<span class="property">message</span> &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = errorHandler</span><br></pre></td></tr></table></figure>
+
+<h2 id="cookie-parser"><a href="#cookie-parser" class="headerlink" title="cookie-parser"></a>cookie-parser</h2><p>安裝 cookie-parser，用於解析 cookie :</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i cookie-parser</span><br></pre></td></tr></table></figure>
+
+<h2 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h2><p>安裝 cors，用於解決跨域問題 :</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i cors</span><br></pre></td></tr></table></figure>
+
+<p>創建 allowedOrigins.js，設定允許的 url。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// config/allowedOrigins.js</span></span><br><span class="line"><span class="keyword">const</span> allowedOrigins = [</span><br><span class="line">  <span class="comment">// 部署前須修改</span></span><br><span class="line">  <span class="string">&quot;http://localhost:5173&quot;</span>,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = allowedOrigins</span><br></pre></td></tr></table></figure>
+
+<p>創建 corsOptions.js，設定 cors 的 options。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// config/corsOptions.js</span></span><br><span class="line"><span class="keyword">const</span> allowedOrigins = <span class="built_in">require</span>(<span class="string">&quot;./allowedOrigins&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> corsOptions = &#123;</span><br><span class="line">  <span class="attr">origin</span>: <span class="function">(<span class="params">origin, callback</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (allowedOrigins.<span class="title function_">indexOf</span>(origin) !== -<span class="number">1</span> || !origin) &#123;</span><br><span class="line">      <span class="title function_">callback</span>(<span class="literal">null</span>, <span class="literal">true</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="title function_">callback</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;Not allowed by CORS&quot;</span>))</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">credentials</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">optionsSuccessStatus</span>: <span class="number">200</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = corsOptions</span><br></pre></td></tr></table></figure>
+
+<h2 id="啟用-Middleware"><a href="#啟用-Middleware" class="headerlink" title="啟用 Middleware"></a>啟用 Middleware</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// server.js</span></span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&quot;express&quot;</span>)</span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">express</span>()</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line"><span class="keyword">const</span> cookieParser = <span class="built_in">require</span>(<span class="string">&quot;cookie-parser&quot;</span>)</span><br><span class="line"><span class="keyword">const</span> cors = <span class="built_in">require</span>(<span class="string">&quot;cors&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; logger &#125; = <span class="built_in">require</span>(<span class="string">&quot;./middleware/logger&quot;</span>)</span><br><span class="line"><span class="keyword">const</span> errorHandler = <span class="built_in">require</span>(<span class="string">&quot;./middleware/errorHandler&quot;</span>)</span><br><span class="line"><span class="keyword">const</span> corsOptions = <span class="built_in">require</span>(<span class="string">&quot;./config/corsOptions&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">PORT</span> = process.<span class="property">env</span>.<span class="property">PORT</span> || <span class="number">3500</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 啟用 logger middleware</span></span><br><span class="line">app.<span class="title function_">use</span>(logger)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 啟用 cors</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">cors</span>(corsOptions))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 解析 json</span></span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">json</span>())</span><br><span class="line"></span><br><span class="line"><span class="comment">// 啟用 cookie-parser</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">cookieParser</span>())</span><br><span class="line"></span><br><span class="line"><span class="comment">// 提供靜態頁面</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&quot;/&quot;</span>, express.<span class="title function_">static</span>(path.<span class="title function_">join</span>(__dirname, <span class="string">&quot;/public&quot;</span>)))</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&quot;/&quot;</span>, <span class="built_in">require</span>(<span class="string">&quot;./routes/root&quot;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 接收未知 url，並回應 404 頁面</span></span><br><span class="line">app.<span class="title function_">all</span>(<span class="string">&quot;*&quot;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  res.<span class="title function_">status</span>(<span class="number">404</span>)</span><br><span class="line">  <span class="keyword">if</span> (req.<span class="title function_">accepts</span>(<span class="string">&quot;html&quot;</span>)) &#123;</span><br><span class="line">    res.<span class="title function_">sendFile</span>(path.<span class="title function_">join</span>(__dirname, <span class="string">&quot;views&quot;</span>, <span class="string">&quot;404.html&quot;</span>))</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (req.<span class="title function_">accepts</span>(<span class="string">&quot;json&quot;</span>)) &#123;</span><br><span class="line">    res.<span class="title function_">json</span>(&#123; <span class="attr">message</span>: <span class="string">&quot;404 Not Found&quot;</span> &#125;)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    res.<span class="title function_">type</span>(<span class="string">&quot;txt&quot;</span>).<span class="title function_">send</span>(<span class="string">&quot;404 Not Found&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 啟用 errorHandler</span></span><br><span class="line">app.<span class="title function_">use</span>(errorHandler)</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">listen</span>(<span class="variable constant_">PORT</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Server running on port <span class="subst">$&#123;PORT&#125;</span>`</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Node-js/" rel="tag"># Node.js</a>
+              <a href="/tags/Express-js/" rel="tag"># Express.js</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/06/08/Backend-API%E7%9A%84%E9%9D%9C%E6%85%8B%E9%A0%81%E9%9D%A2/" rel="prev" title="Backend - API 的靜態頁面">
+                  <i class="fa fa-chevron-left"></i> Backend - API 的靜態頁面
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/06/08/Backend-Database/" rel="next" title="Backend - Database">
+                  Backend - Database <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sheng Feng Chang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
