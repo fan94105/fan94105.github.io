@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"fan94105.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.17.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="提升(Hoisting)JavaScript 在執行程式碼之前(編譯階段)，會先掃描程式中宣告的變數，並將它們儲存在變數環境物件(variable environment object)中，使某些類型的變數在宣告之前允許被存取。              提升     原始值     作用域           函式宣告(function declaration)     ⭕     實際函式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript - 提升(Hoisting)與暫時死區(TDZ)">
+<meta property="og:url" content="https://fan94105.github.io/2023/07/07/JavaScript-%E6%8F%90%E5%8D%87-Hoisting-%E8%88%87%E6%9A%AB%E6%99%82%E6%AD%BB%E5%8D%80-TDZ/index.html">
+<meta property="og:site_name" content="Feng&#39;s Blog">
+<meta property="og:description" content="提升(Hoisting)JavaScript 在執行程式碼之前(編譯階段)，會先掃描程式中宣告的變數，並將它們儲存在變數環境物件(variable environment object)中，使某些類型的變數在宣告之前允許被存取。              提升     原始值     作用域           函式宣告(function declaration)     ⭕     實際函式">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-07-07T07:40:08.657Z">
+<meta property="article:modified_time" content="2023-07-08T06:39:42.687Z">
+<meta property="article:author" content="Sheng Feng Chang">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://fan94105.github.io/2023/07/07/JavaScript-%E6%8F%90%E5%8D%87-Hoisting-%E8%88%87%E6%9A%AB%E6%99%82%E6%AD%BB%E5%8D%80-TDZ/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://fan94105.github.io/2023/07/07/JavaScript-%E6%8F%90%E5%8D%87-Hoisting-%E8%88%87%E6%9A%AB%E6%99%82%E6%AD%BB%E5%8D%80-TDZ/","path":"2023/07/07/JavaScript-提升-Hoisting-與暫時死區-TDZ/","title":"JavaScript - 提升(Hoisting)與暫時死區(TDZ)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JavaScript - 提升(Hoisting)與暫時死區(TDZ) | Feng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Feng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8F%90%E5%8D%87-Hoisting"><span class="nav-number">1.</span> <span class="nav-text">提升(Hoisting)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#let-%E8%88%87-const-%E7%9A%84%E6%8F%90%E5%8D%87"><span class="nav-number">1.1.</span> <span class="nav-text">let 與 const 的提升</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E9%9C%80%E8%A6%81%E6%8F%90%E5%8D%87"><span class="nav-number">1.2.</span> <span class="nav-text">為什麼需要提升 ?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E5%8D%87%E5%A6%82%E4%BD%95%E9%81%8B%E4%BD%9C"><span class="nav-number">1.3.</span> <span class="nav-text">提升如何運作 ?</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9A%AB%E6%99%82%E6%AD%BB%E5%8D%80-TDZ"><span class="nav-number">2.</span> <span class="nav-text">暫時死區(TDZ)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E9%9C%80%E8%A6%81%E6%9A%AB%E6%99%82%E6%AD%BB%E5%8D%80"><span class="nav-number">2.1.</span> <span class="nav-text">為什麼需要暫時死區 ?</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Sheng Feng Chang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/fan94105" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;fan94105" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://fan94105.github.io/2023/07/07/JavaScript-%E6%8F%90%E5%8D%87-Hoisting-%E8%88%87%E6%9A%AB%E6%99%82%E6%AD%BB%E5%8D%80-TDZ/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Sheng Feng Chang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="JavaScript - 提升(Hoisting)與暫時死區(TDZ) | Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript - 提升(Hoisting)與暫時死區(TDZ)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-07-07 15:40:08" itemprop="dateCreated datePublished" datetime="2023-07-07T15:40:08+08:00">2023-07-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-07-08 14:39:42" itemprop="dateModified" datetime="2023-07-08T14:39:42+08:00">2023-07-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><span id="more"></span>
+
+<h1 id="提升-Hoisting"><a href="#提升-Hoisting" class="headerlink" title="提升(Hoisting)"></a>提升(Hoisting)</h1><p>JavaScript 在執行程式碼之前(編譯階段)，會先掃描程式中宣告的變數，並將它們儲存在變數環境物件(variable environment object)中，使某些類型的變數在宣告之前允許被存取。</p>
+<table>
+  <tr>
+    <td></td>
+    <td align="center">提升</td>
+    <td align="center">原始值</td>
+    <td align="center">作用域</td>
+  </tr>
+  <tr>
+    <td align="center">函式宣告(function declaration)</td>
+    <td align="center">⭕</td>
+    <td align="center">實際函式</td>
+    <td align="center">區塊作用域</td>
+  </tr>
+  <tr>
+    <td align="center">var 宣告的變數</td>
+    <td align="center">⭕</td>
+    <td align="center">undefined</td>
+    <td align="center">函式作用域</td>
+  </tr>
+  <tr>
+    <td align="center">let / const 宣告的變數</td>
+    <td align="center">⭕</td>
+    <td align="center">&lt;uninitialized&gt;, TDZ</td>
+    <td align="center">區塊作用域</td>
+  </tr>
+  <tr>
+    <td align="center">函式表達式(function expression)、箭頭函式(arrow function)</td>
+    <td align="center" colspan="3">跟據 var 宣告或 let / const 宣告而不同</td>
+  </tr>
+</table>
+
+<h2 id="let-與-const-的提升"><a href="#let-與-const-的提升" class="headerlink" title="let 與 const 的提升"></a>let 與 const 的提升</h2><p>以 let 或 const 宣告的變數也會提升，但提升後的行為與 var 變數不同，初始值被設定為 unintialized，因此在宣告前存取變數會拋出 <code>ReferenceError: Cannot access &#39;a&#39; before initialization</code> 的錯誤。</p>
+<p>程式範例 :</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">10</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(a) <span class="comment">// ReferenceError: Cannot access &#x27;a&#x27; before initialization</span></span><br><span class="line">  <span class="keyword">let</span> a</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">foo</span>()</span><br></pre></td></tr></table></figure>
+
+<h2 id="為什麼需要提升"><a href="#為什麼需要提升" class="headerlink" title="為什麼需要提升 ?"></a>為什麼需要提升 ?</h2><ol>
+<li>在任何地方呼叫函式，不一定要先宣告後呼叫。</li>
+<li>函式可以互相呼叫。</li>
+</ol>
+<h2 id="提升如何運作"><a href="#提升如何運作" class="headerlink" title="提升如何運作 ?"></a>提升如何運作 ?</h2><p>當呼叫一個函式時，即產生一個執行環境(Execution Context，以下簡稱 EC)，每個 EC 會有相對應的 variable object(以下簡稱 VO)，在 EC 中宣告的變數及函式都會儲存在 VO 中，若是函式，參數也會儲存到 VO 裡。</p>
+<p>在進入 EC 時，JS 引擎會依照以下順序將變數儲存到 VO 中 :</p>
+<p>對於函式的參數，會被儲存為 VO 中的屬性，若是沒有傳值，會被初始化為 undefined :</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params">a, b, c</span>) &#123;&#125;</span><br><span class="line"><span class="title function_">foo</span>(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
+<p>那 VO 會像 :</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">a</span>: <span class="number">10</span>,</span><br><span class="line">  <span class="attr">b</span>: <span class="literal">undefined</span>,</span><br><span class="line">  <span class="attr">c</span>: <span class="literal">undefined</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>對於函式宣告，同樣會儲存在 VO 裡面，值為函式的回傳值 :<br>假如 VO 中已有同名屬性，就會將其值覆蓋，</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params">a</span>) &#123;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">a</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">foo</span>(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>所以 VO 會像 :</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">a</span>: <span class="keyword">function</span> a</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最後是變數宣告，同樣存在 VO 裡面，值設為 undefined :<br>若 VO 中已存在同名屬性，值不會改變。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params">a</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(a)</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">20</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">foo</span>(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
+<p>因此 VO 會像 :</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">a</span>: <span class="number">10</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最後總結一下，當程式執行進入 EC，會依照順序做三件事 :</p>
+<ol>
+<li>將參數存入 VO 並設定值，若無傳值則為 undefined。</li>
+<li>將函式宣告存入 VO，若已有同名屬性則將其值覆蓋。</li>
+<li>將變數宣告存入 VO，若已有同名屬性則將其忽略。</li>
+</ol>
+<h1 id="暫時死區-TDZ"><a href="#暫時死區-TDZ" class="headerlink" title="暫時死區(TDZ)"></a>暫時死區(TDZ)</h1><p>Temporal Dead Zone。指在變數「提升之後」及「賦值之前」的期間。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ---- firstName 的暫時死區 ----</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(firstName) <span class="comment">// ReferenceError: Cannot access &#x27;firstName&#x27; before initialization</span></span><br><span class="line"><span class="comment">// ----------------------------</span></span><br><span class="line"><span class="keyword">const</span> firstName = <span class="string">&quot;ABen&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(color) <span class="comment">// ReferenceError: color is not defined</span></span><br></pre></td></tr></table></figure>
+
+<p>從上面的程式碼中可以看出，因為 JS 引擎在程式執行前會先掃描程式碼中的變數，進而知道變數尚未初始化，所以若在變數宣告之前存取變數，引擎會將暫時死區中的變數值設為 uninitialized。當程式執行到宣告變數的地方時，變數移出暫時死區，才可以被存取。</p>
+<h2 id="為什麼需要暫時死區"><a href="#為什麼需要暫時死區" class="headerlink" title="為什麼需要暫時死區 ?"></a>為什麼需要暫時死區 ?</h2><ol>
+<li>避免在宣告前使用變數。</li>
+<li>為了實作 <strong>const</strong>。<ul>
+<li>假如沒有暫時死區，若在以 const 宣告變數前存取該變數，那這個變數就會像以 var 宣告的變數一樣，初始值為 undefined，如此一來就違背 const 為常量的定義。</li>
+</ul>
+</li>
+</ol>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p><a target="_blank" rel="noopener" href="https://blog.techbridge.cc/2018/11/10/javascript-hoisting/">huli - 我知道你懂 hoisting，可是你了解到多深？</a><br><a target="_blank" rel="noopener" href="https://www.udemy.com/course/the-complete-javascript-course/">Jonas Schmedtmann - The Complete JavaScript Course 2023: From Zero to Expert!</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/07/05/JavaScript-%E5%9F%B7%E8%A1%8C%E7%92%B0%E5%A2%83-Execution-Context-%E8%88%87%E5%91%BC%E5%8F%AB%E5%A0%86%E7%96%8A-Call-Stack/" rel="prev" title="JavaScript - 執行環境(Execution Context)與執行堆疊(Call Stack)">
+                  <i class="fa fa-chevron-left"></i> JavaScript - 執行環境(Execution Context)與執行堆疊(Call Stack)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/07/08/JavaScript-JS-Engine-and-Runtime/" rel="next" title="JavaScript - JS Engine and Runtime">
+                  JavaScript - JS Engine and Runtime <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sheng Feng Chang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
