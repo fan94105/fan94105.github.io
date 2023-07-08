@@ -26,19 +26,19 @@
 <meta property="og:site_name" content="Feng&#39;s Blog">
 <meta property="og:description" content="JS 引擎中包含 Call Stack 與 Heap，在程式碼進入 Call Stack 之前，會先進行解析與編譯的過程，JavaScript 為即時編譯語言，可以比直譯語言更快的執行程式碼，提升運行速度。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://fan94105.github.io/2023/07/08/JavaScript-JS-Engine-and-Runtime/">
-<meta property="og:image" content="https://fan94105.github.io/2023/07/08/JavaScript-JS-Engine-and-Runtime/">
-<meta property="og:image" content="https://fan94105.github.io/2023/07/08/JavaScript-JS-Engine-and-Runtime/">
-<meta property="og:image" content="https://fan94105.github.io/2023/07/08/JavaScript-JS-Engine-and-Runtime/">
-<meta property="og:image" content="https://fan94105.github.io/2023/07/08/JavaScript-JS-Engine-and-Runtime/">
-<meta property="og:image" content="https://fan94105.github.io/2023/07/08/JavaScript-JS-Engine-and-Runtime/">
-<meta property="og:image" content="https://fan94105.github.io/2023/07/08/JavaScript-JS-Engine-and-Runtime/">
+<meta property="og:image" content="https://fan94105.github.io/2023/07/08/JavaScript-JS-Engine-and-Runtime/js_engine.JPG">
+<meta property="og:image" content="https://fan94105.github.io/2023/07/08/JavaScript-JS-Engine-and-Runtime/interpretation.JPG">
+<meta property="og:image" content="https://fan94105.github.io/2023/07/08/JavaScript-JS-Engine-and-Runtime/compilation.JPG">
+<meta property="og:image" content="https://fan94105.github.io/2023/07/08/JavaScript-JS-Engine-and-Runtime/jit.JPG">
+<meta property="og:image" content="https://fan94105.github.io/2023/07/08/JavaScript-JS-Engine-and-Runtime/js_engine_process.JPG">
+<meta property="og:image" content="https://fan94105.github.io/2023/07/08/JavaScript-JS-Engine-and-Runtime/browser_runtime.JPG">
+<meta property="og:image" content="https://fan94105.github.io/2023/07/08/JavaScript-JS-Engine-and-Runtime/node_runtime.JPG">
 <meta property="article:published_time" content="2023-07-08T07:57:08.000Z">
 <meta property="article:modified_time" content="2023-07-08T07:57:08.695Z">
 <meta property="article:author" content="Sheng Feng Chang">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://fan94105.github.io/2023/07/08/JavaScript-JS-Engine-and-Runtime/">
+<meta name="twitter:image" content="https://fan94105.github.io/2023/07/08/JavaScript-JS-Engine-and-Runtime/js_engine.JPG">
 
 
 <link rel="canonical" href="https://fan94105.github.io/2023/07/08/JavaScript-JS-Engine-and-Runtime/">
@@ -160,7 +160,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -171,7 +171,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -261,12 +261,12 @@
 <li>呼叫堆疊(Call Stack) : 程式的執行區域。</li>
 <li>堆積(Heap) : 物件儲存的區域。</li>
 </ol>
-<p><img src="/2023/07/08/JavaScript-JS-Engine-and-Runtime/" alt="JavaScript 引擎"></p>
+<p><img src="/2023/07/08/JavaScript-JS-Engine-and-Runtime/js_engine.JPG" alt="JavaScript 引擎"></p>
 <h2 id="直譯-amp-編譯-amp-即時編譯"><a href="#直譯-amp-編譯-amp-即時編譯" class="headerlink" title="直譯 &amp; 編譯 &amp; 即時編譯"></a>直譯 &amp; 編譯 &amp; 即時編譯</h2><p>將程式語言轉換成機器語言的過程。</p>
-<p>直譯(Interpretation) : 程式碼一行一行的執行，同時轉換成機器碼。<br><img src="/2023/07/08/JavaScript-JS-Engine-and-Runtime/" alt="Interpretation"></p>
-<p>編譯(Compilation) : 程式碼先編譯成機器碼，建立 protable file，之後隨時執行程式。<br><img src="/2023/07/08/JavaScript-JS-Engine-and-Runtime/" alt="Compilation"></p>
-<p>即時編譯(Just-in-time compilation) : 程式碼先編譯成機器碼，之後立刻執行程式。<br><img src="/2023/07/08/JavaScript-JS-Engine-and-Runtime/" alt="JIT compilation"></p>
-<h2 id="即時編譯過程"><a href="#即時編譯過程" class="headerlink" title="即時編譯過程"></a>即時編譯過程</h2><p><img src="/2023/07/08/JavaScript-JS-Engine-and-Runtime/" alt="JS engine process"><br>JavaScript 的即時編譯過程 :</p>
+<p>直譯(Interpretation) : 程式碼一行一行的執行，同時轉換成機器碼。<br><img src="/2023/07/08/JavaScript-JS-Engine-and-Runtime/interpretation.JPG" alt="Interpretation"></p>
+<p>編譯(Compilation) : 程式碼先編譯成機器碼，建立 protable file，之後隨時執行程式。<br><img src="/2023/07/08/JavaScript-JS-Engine-and-Runtime/compilation.JPG" alt="Compilation"></p>
+<p>即時編譯(Just-in-time compilation) : 程式碼先編譯成機器碼，之後立刻執行程式。<br><img src="/2023/07/08/JavaScript-JS-Engine-and-Runtime/jit.JPG" alt="JIT compilation"></p>
+<h2 id="即時編譯過程"><a href="#即時編譯過程" class="headerlink" title="即時編譯過程"></a>即時編譯過程</h2><p><img src="/2023/07/08/JavaScript-JS-Engine-and-Runtime/js_engine_process.JPG" alt="JS engine process"><br>JavaScript 的即時編譯過程 :</p>
 <ol>
 <li>解析(Parsing) : 將程式碼解析成 AST(abstract syntax tree ，抽象語法樹)，並檢查語法錯誤。</li>
 <li>編譯(Compilation) : 將 AST 編譯成機器語言。<ul>
@@ -276,8 +276,8 @@
 <li>執行(Execution) : 立即於 call stack 中執行。</li>
 <li>優化(Optimization) : 將最初編譯的未優化機器碼進行優化，並重新編譯。</li>
 </ol>
-<h1 id="Runtime"><a href="#Runtime" class="headerlink" title="Runtime"></a>Runtime</h1><p>瀏覽器中的 Runtime<br><img src="/2023/07/08/JavaScript-JS-Engine-and-Runtime/" alt="瀏覽器中的 Runtime"></p>
-<p>Node.js 中的 Runtime<br><img src="/2023/07/08/JavaScript-JS-Engine-and-Runtime/" alt="Node.js 中的 Runtime"></p>
+<h1 id="Runtime"><a href="#Runtime" class="headerlink" title="Runtime"></a>Runtime</h1><p>瀏覽器中的 Runtime<br><img src="/2023/07/08/JavaScript-JS-Engine-and-Runtime/browser_runtime.JPG" alt="瀏覽器中的 Runtime"></p>
+<p>Node.js 中的 Runtime<br><img src="/2023/07/08/JavaScript-JS-Engine-and-Runtime/node_runtime.JPG" alt="Node.js 中的 Runtime"></p>
 <h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p><a target="_blank" rel="noopener" href="https://www.udemy.com/course/the-complete-javascript-course/">Jonas Schmedtmann - The Complete JavaScript Course 2023: From Zero to Expert!</a></p>
 
     </div>
@@ -295,8 +295,8 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/07/07/JavaScript-%E6%8F%90%E5%8D%87-Hoisting-%E8%88%87%E6%9A%AB%E6%99%82%E6%AD%BB%E5%8D%80-TDZ/" rel="prev" title="JavaScript - 提升(Hoisting)與暫時死區(TDZ)">
-                  <i class="fa fa-chevron-left"></i> JavaScript - 提升(Hoisting)與暫時死區(TDZ)
+                <a href="/2023/07/05/MERN-Deploy-Full-Stack-App/" rel="prev" title="MERN - Deploy Full Stack App">
+                  <i class="fa fa-chevron-left"></i> MERN - Deploy Full Stack App
                 </a>
             </div>
             <div class="post-nav-item">
