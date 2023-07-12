@@ -85,7 +85,7 @@ func1()
 ```
 
 Call Stack 看起來會像 :  
-![Call Stack](call_stack.jpg)
+![Call Stack](call_stack.webp)
 
 執行流程 :
 
