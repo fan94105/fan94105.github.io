@@ -7,7 +7,6 @@ categories:
 date: 2023-07-10 14:19:44
 ---
 
-
 在 JavaScript 中，`this` 指的是對目前執行環境的 ThisBinding。而在多數情況下，`this` 會因為函式的呼叫方式而有所不同。
 
 <!-- more -->
@@ -224,5 +223,5 @@ callName.apply(aben, [2, "mixed"]) // ABen is a 2-year-old mixed breed dog.
 
 # 參考資料
 
-[Kuro - What's THIS in JavaScript ? ](https://kuro.tw/posts/2017/10/12/What-is-THIS-in-JavaScript-%E4%B8%8A/)  
-[Jonas Schmedtmann - The Complete JavaScript Course 2023: From Zero to Expert!](https://www.udemy.com/course/the-complete-javascript-course/)
+[What's THIS in JavaScript ? ](https://kuro.tw/posts/2017/10/12/What-is-THIS-in-JavaScript-%E4%B8%8A/)  
+[The Complete JavaScript Course 2023: From Zero to Expert!](https://www.udemy.com/course/the-complete-javascript-course/)

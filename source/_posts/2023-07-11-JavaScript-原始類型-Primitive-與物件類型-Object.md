@@ -7,7 +7,6 @@ categories:
 date: 2023-07-11 14:25:54
 ---
 
-
 原始類型(Primitive)與物件類型(Object)的差別在於兩者儲存的位置以及儲存的值，原始類型存於 Call Stack 中且儲存實際值，物件類型存於 Heap 中且儲存對物件的參考地址。
 
 <!-- more -->
@@ -105,7 +104,7 @@ console.log(aben) // {age: 2}
 
 # 參考資料
 
-- [Jonas Schmedtmann - The Complete JavaScript Course 2023: From Zero to Expert!](https://www.udemy.com/course/the-complete-javascript-course/)
+- [The Complete JavaScript Course 2023: From Zero to Expert!](https://www.udemy.com/course/the-complete-javascript-course/)
 - [從博物館寄物櫃理解變數儲存模型](https://hulitw.medium.com/variable-and-frontdesk-a53a0440af3c)
 - [[筆記] 談談 JavaScript 中 by reference 和 by value 的重要觀念](https://pjchender.blogspot.com/2016/03/javascriptby-referenceby-value.html)
 - [重新認識 JavaScript: Day 05 JavaScript 是「傳值」或「傳址」？](https://ithelp.ithome.com.tw/articles/10191057)

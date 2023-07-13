@@ -99,5 +99,5 @@ Call Stack 看起來會像 :
 
 # 參考資料
 
-[Wilson Ren - 2023 網頁全端開發](https://www.udemy.com/course/wilson-full-stack-web-development/)  
-[Jonas Schmedtmann - The Complete JavaScript Course 2023: From Zero to Expert!](https://www.udemy.com/course/the-complete-javascript-course/)
+[2023 網頁全端開發](https://www.udemy.com/course/wilson-full-stack-web-development/)  
+[The Complete JavaScript Course 2023: From Zero to Expert!](https://www.udemy.com/course/the-complete-javascript-course/)

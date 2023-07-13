@@ -8,7 +8,6 @@ categories:
 date: 2023-07-12 22:45:33
 ---
 
-
 解構賦值可以用來提取陣列或物件中的資料，讓原本可能需要迴圈或迭代的功能可以用更簡易的語句來達成。而展開運算符與其餘運算符可以讓我們更靈活的使用函式，在處理從 API 取得的資料時也更加容易。
 
 <!-- more -->
@@ -153,6 +152,6 @@ sum(...arr) // 6
 
 # 參考資料
 
-- [Jonas Schmedtmann - The Complete JavaScript Course 2023: From Zero to Expert!](https://www.udemy.com/course/the-complete-javascript-course/)
+- [The Complete JavaScript Course 2023: From Zero to Expert!](https://www.udemy.com/course/the-complete-javascript-course/)
 - [解構賦值· 從 ES6 開始的 JavaScript 學習生活](https://eyesofkids.gitbooks.io/javascript-start-from-es6/content/part4/destructuring.html)
 - [展開運算符與其餘運算符· 從 ES6 開始的 JavaScript 學習生活](https://eyesofkids.gitbooks.io/javascript-start-from-es6/content/part4/rest_spread.html)
