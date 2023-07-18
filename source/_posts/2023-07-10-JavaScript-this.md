@@ -182,7 +182,7 @@ const sum = (a, b) => {
   return a + b
 }
 
-const newFunc = add.bind(this, 1)
+const newFunc = sum.bind(this, 1)
 
 console.log(newFunc(1)) // 2
 ```
@@ -212,8 +212,8 @@ const aben = {
   name: "ABen",
 }
 
-function callName(...args) {
-  console.log(`${this.name} is a ${args[0]}-year-old ${args[1]} breed dog.`)
+function callName(age, breed) {
+  console.log(`${this.name} is a ${age}-year-old ${breed} breed dog.`)
 }
 
 callName.apply(aben, [2, "mixed"]) // ABen is a 2-year-old mixed breed dog.
