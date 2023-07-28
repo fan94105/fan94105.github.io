@@ -223,5 +223,5 @@ callName.apply(aben, [2, "mixed"]) // ABen is a 2-year-old mixed breed dog.
 
 # 參考資料
 
-[What's THIS in JavaScript ? ](https://kuro.tw/posts/2017/10/12/What-is-THIS-in-JavaScript-%E4%B8%8A/)  
-[The Complete JavaScript Course 2023: From Zero to Expert!](https://www.udemy.com/course/the-complete-javascript-course/)
+- [What's THIS in JavaScript ? ](https://kuro.tw/posts/2017/10/12/What-is-THIS-in-JavaScript-%E4%B8%8A/)
+- [The Complete JavaScript Course 2023: From Zero to Expert!](https://www.udemy.com/course/the-complete-javascript-course/)

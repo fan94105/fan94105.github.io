@@ -163,9 +163,9 @@ boo() // ABen
 
 # 參考資料
 
-[The Complete JavaScript Course 2023: From Zero to Expert!][2]  
-[Scope, Lexical Environment and Scope Chain in JavaScript][3]  
-[[JavaScript] Javascript 的作用域 (Scope) 與範圍鏈 (Scope Chain)：往外找][4]
+- [The Complete JavaScript Course 2023: From Zero to Expert!][2]
+- [Scope, Lexical Environment and Scope Chain in JavaScript][3]
+- [[JavaScript] Javascript 的作用域 (Scope) 與範圍鏈 (Scope Chain)：往外找][4]
 
 [1]: https://www.w3schools.com/js/js_scope.asp
 [2]: https://www.udemy.com/course/the-complete-javascript-course/
