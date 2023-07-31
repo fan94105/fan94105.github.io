@@ -5,9 +5,11 @@ tags:
   - DOM
 categories:
   - JavaScript
+date: 2023-07-31 17:32:08
 ---
 
-文件物件模型(Document Object Model，DOM)
+
+文件物件模型(Document Object Model，DOM)，為 HTML 文件的程式介面，提供 HTML 文件樹狀結構的模型，本身並不是 JavaScript 的一部分。
 
 <!-- more -->
 
@@ -289,4 +291,4 @@ box.classList.contains("hidden") // true
 # 參考資料
 
 - [The Complete JavaScript Course 2023: From Zero to Expert!](https://www.udemy.com/course/the-complete-javascript-course/)
-- [Document](https://developer.mozilla.org/en-US/docs/Web/API/Document)
+- [MDN - Document](https://developer.mozilla.org/en-US/docs/Web/API/Document)
