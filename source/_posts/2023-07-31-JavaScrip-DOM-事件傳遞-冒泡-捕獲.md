@@ -8,7 +8,6 @@ categories:
 date: 2023-07-31 17:34:00
 ---
 
-
 當元素綁定的事件被觸發時，會經過三個階段，捕獲階段(CAPTURING_PHASE)、目標階段(AT_TARGET)與冒泡階段(BUBBLING_PHASE)。
 
 <!-- more -->
@@ -51,8 +50,9 @@ DOM 事件傳遞分成三個階段 :
 - 目標階段(AT_TARGET) : 事件傳遞到目標本身。
 - 冒泡階段(BUBBLING_PHASE) : 事件由目標向上傳遞回 `window`。
 
-![DOM 事件傳遞示意圖](w3c-dom-event-flow.webp)  
-(圖片來源 : [W3C - event flow][1] )
+![DOM 事件傳遞示意圖](w3c-dom-event-flow.webp)
+
+<center>( 圖片來源 : W3C - event flow )</center>
 
 在 `addEventListener()` 回調函式中，可以通過事件物件 `e` 的 `eventPhase` 屬性，確認當前事件在傳遞中的哪一個階段被觸發。
 

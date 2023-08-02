@@ -8,7 +8,6 @@ categories:
 date: 2023-07-31 17:32:08
 ---
 
-
 文件物件模型(Document Object Model，DOM)，為 HTML 文件的程式介面，提供 HTML 文件樹狀結構的模型，本身並不是 JavaScript 的一部分。
 
 <!-- more -->
@@ -31,8 +30,9 @@ date: 2023-07-31 17:32:08
 
 示意圖 :
 
-![DOM API 組織圖](dom_organized.webp)  
-(圖片來源 : The Complete JavaScript Course 2023: From Zero to Expert!)
+![DOM API 組織圖](dom_organized.webp)
+
+<center>( 圖片來源 : The Complete JavaScript Course 2023: From Zero to Expert! )</center>
 
 # 操作 DOM
 
