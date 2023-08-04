@@ -7,7 +7,7 @@ categories:
   - JavaScript
 ---
 
-物件導向程式設計(Object-oriented programming，OOP)是一種以物件概念為基礎的程式撰寫方式，使用物件模擬現實生活中的事物。
+物件導向程式設計(Object-oriented programming，OOP)是一種以物件概念為基礎的程式撰寫方式，使用物件模擬現實生活中的事物。在 JS 中並不存在傳統 OOP 的類別(class)，而是以原型(prototype)實現物件導向。
 
 <!-- more -->
 
