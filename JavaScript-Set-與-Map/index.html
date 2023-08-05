@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"fan94105.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.17.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Set 與 Map 都是 JavaScript 中特殊的資料結構，Set 與 Array 相似，但其中的每一個元素都是唯一值，不會有重複元素，主要用途是去除重複出現的元素與判斷元素存在與否；Map 則與 Object 相似，其中的 key 值映射對應 value，而 key 可以使用任意類型的值定義，且亦具備唯一性。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript - Set 與 Map">
+<meta property="og:url" content="https://fan94105.github.io/JavaScript-Set-%E8%88%87-Map/index.html">
+<meta property="og:site_name" content="Feng&#39;s Blog">
+<meta property="og:description" content="Set 與 Map 都是 JavaScript 中特殊的資料結構，Set 與 Array 相似，但其中的每一個元素都是唯一值，不會有重複元素，主要用途是去除重複出現的元素與判斷元素存在與否；Map 則與 Object 相似，其中的 key 值映射對應 value，而 key 可以使用任意類型的值定義，且亦具備唯一性。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-07-15T09:27:11.000Z">
+<meta property="article:modified_time" content="2023-07-15T09:27:11.669Z">
+<meta property="article:author" content="Sheng Feng Chang">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://fan94105.github.io/JavaScript-Set-%E8%88%87-Map/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://fan94105.github.io/JavaScript-Set-%E8%88%87-Map/","path":"JavaScript-Set-與-Map/","title":"JavaScript - Set 與 Map"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JavaScript - Set 與 Map | Feng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Feng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Set"><span class="nav-number">1.</span> <span class="nav-text">Set</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Set-%E7%9A%84%E5%B1%AC%E6%80%A7%E8%88%87%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">Set 的屬性與方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#size"><span class="nav-number">1.1.1.</span> <span class="nav-text">size</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#has"><span class="nav-number">1.1.2.</span> <span class="nav-text">has()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#add"><span class="nav-number">1.1.3.</span> <span class="nav-text">add()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#delete"><span class="nav-number">1.1.4.</span> <span class="nav-text">delete()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#clear"><span class="nav-number">1.1.5.</span> <span class="nav-text">clear()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Map"><span class="nav-number">2.</span> <span class="nav-text">Map</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Map-%E7%9A%84%E5%B1%AC%E6%80%A7%E8%88%87%E6%96%B9%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">Map 的屬性與方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#size-1"><span class="nav-number">2.1.1.</span> <span class="nav-text">size</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#has-1"><span class="nav-number">2.1.2.</span> <span class="nav-text">has()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#set"><span class="nav-number">2.1.3.</span> <span class="nav-text">set()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get"><span class="nav-number">2.1.4.</span> <span class="nav-text">get()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#delete-1"><span class="nav-number">2.1.5.</span> <span class="nav-text">delete()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#clear-1"><span class="nav-number">2.1.6.</span> <span class="nav-text">clear()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Sheng Feng Chang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/fan94105" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;fan94105" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://fan94105.github.io/JavaScript-Set-%E8%88%87-Map/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Sheng Feng Chang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="JavaScript - Set 與 Map | Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript - Set 與 Map
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-07-15 17:27:11" itemprop="dateCreated datePublished" datetime="2023-07-15T17:27:11+08:00">2023-07-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Set 與 Map 都是 JavaScript 中特殊的資料結構，Set 與 Array 相似，但其中的每一個元素都是唯一值，不會有重複元素，主要用途是去除重複出現的元素與判斷元素存在與否；Map 則與 Object 相似，其中的 key 值映射對應 value，而 key 可以使用任意類型的值定義，且亦具備唯一性。</p>
+<span id="more"></span>
+
+<h1 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h1><p>具有不重複元素的集合。存在的意義是判斷 Set 中是否包含某個元素，所以重點不在於從 Set 中將元素取出。</p>
+<p>去除陣列中的重複元素 :</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> arrSet = <span class="keyword">new</span> <span class="title class_">Set</span>(arr)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arrSet) <span class="comment">// Set(4) &#123;0, 1, 2, 3&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>Set 與陣列的轉換 :</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arrSet = <span class="keyword">new</span> <span class="title class_">Set</span>([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="title class_">SetToArray</span> = [...arrSet] <span class="comment">// Array.from(arrSet)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="title class_">ArrayToSet</span> = <span class="keyword">new</span> <span class="title class_">Set</span>(<span class="title class_">SetToArray</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Set-的屬性與方法"><a href="#Set-的屬性與方法" class="headerlink" title="Set 的屬性與方法"></a>Set 的屬性與方法</h2><h3 id="size"><a href="#size" class="headerlink" title="size"></a>size</h3><p>回傳 Set 中的元素數量。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arrSet = <span class="keyword">new</span> <span class="title class_">Set</span>([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>])</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arrSet.<span class="property">size</span>) <span class="comment">// 4</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="has"><a href="#has" class="headerlink" title="has()"></a>has()</h3><p>檢查 Set 中是否存在指定元素。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arrSet = <span class="keyword">new</span> <span class="title class_">Set</span>([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>])</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arrSet.<span class="title function_">has</span>(<span class="number">1</span>)) <span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arrSet.<span class="title function_">has</span>(<span class="number">4</span>)) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="add"><a href="#add" class="headerlink" title="add()"></a>add()</h3><p>在 Set 中添加元素。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arrSet = <span class="keyword">new</span> <span class="title class_">Set</span>([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>])</span><br><span class="line"></span><br><span class="line">arrSet.<span class="title function_">add</span>(<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arrSet) <span class="comment">// Set(5) &#123;0, 1, 2, 3, 4&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="delete"><a href="#delete" class="headerlink" title="delete()"></a>delete()</h3><p>刪除 Set 中的元素。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arrSet = <span class="keyword">new</span> <span class="title class_">Set</span>([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>])</span><br><span class="line"></span><br><span class="line">arrSet.<span class="title function_">delete</span>(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arrSet) <span class="comment">// Set(3) &#123;0, 1, 2&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="clear"><a href="#clear" class="headerlink" title="clear()"></a>clear()</h3><p>清空 Set 中的所有元素。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arrSet = <span class="keyword">new</span> <span class="title class_">Set</span>([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>])</span><br><span class="line"></span><br><span class="line">arrSet.<span class="title function_">clear</span>()</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arrSet) <span class="comment">// Set(0) &#123;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h1><p>Map 是與物件(Object)相似的鍵值對(key-value pair)數據結構，Map 中的鍵(key)會映射到對應的值(value)。兩者具有以下差異 :</p>
+<ul>
+<li>Map 中的 key 可以是任何類型的值，而 Object 的 key 只能是 <code>String</code> 或 <code>Symbol</code>。</li>
+<li>Map 中的 key 會依添加時間排序，Object 無順序性。</li>
+<li>Map 中的 key 是唯一值，若重複添加則舊的 value 會被覆蓋。</li>
+<li>需要經常增添、刪減屬性的資料，使用 Map 的效能較 Object 佳。</li>
+</ul>
+<p>建立 Map :</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 建立空的 Map</span></span><br><span class="line"><span class="keyword">const</span> emptyMap = <span class="keyword">new</span> <span class="title class_">Map</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 建立時添加鍵值對</span></span><br><span class="line"><span class="keyword">const</span> newMap = <span class="keyword">new</span> <span class="title class_">Map</span>([</span><br><span class="line">  [<span class="string">&quot;name&quot;</span>, <span class="string">&quot;ABen&quot;</span>],</span><br><span class="line">  [<span class="number">2</span>, <span class="string">&quot;age&quot;</span>],</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+
+<p>Map 為可迭代(iterable)的資料結構，所以可以使用 for loop :</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> newMap = <span class="keyword">new</span> <span class="title class_">Map</span>([</span><br><span class="line">  [<span class="string">&quot;name&quot;</span>, <span class="string">&quot;ABen&quot;</span>],</span><br><span class="line">  [<span class="number">2</span>, <span class="string">&quot;age&quot;</span>],</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> [key, value] <span class="keyword">of</span> newMap) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`<span class="subst">$&#123;key&#125;</span>: <span class="subst">$&#123;value&#125;</span>`</span>) <span class="comment">// name: ABen  2: age</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以物件類型的值作為 key 時 :</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> newMap = <span class="keyword">new</span> <span class="title class_">Map</span>()</span><br><span class="line"><span class="keyword">const</span> arr = [<span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line">newMap.<span class="title function_">set</span>(arr, <span class="string">&quot;Test&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(newMap.<span class="title function_">get</span>([<span class="number">1</span>, <span class="number">2</span>])) <span class="comment">// undefined</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(newMap.<span class="title function_">get</span>(arr)) <span class="comment">// Test</span></span><br></pre></td></tr></table></figure>
+
+<p>要特別注意因為物件類型儲存的值為 Heap 中記憶體位址的參考(reference)，所以當上面程式中執行 <code>newMap.get([1, 2])</code> 取值時，指定的陣列 <code>[1, 2]</code> 與先前所設定的陣列 <code>arr</code> 為兩個不同的陣列，因此回傳 <code>undefined</code>。</p>
+<p>物件轉換成 Map :</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> aben = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&quot;ABen&quot;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">2</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">new</span> <span class="title class_">Map</span>(<span class="title class_">Object</span>.<span class="title function_">entries</span>(aben))) <span class="comment">// Map(2) &#123; &#x27;name&#x27; =&gt; &#x27;ABen&#x27;, &#x27;age&#x27; =&gt; 2 &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>Map 轉換成陣列 :</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> aben = <span class="keyword">new</span> <span class="title class_">Map</span>([</span><br><span class="line">  [<span class="string">&quot;name&quot;</span>, <span class="string">&quot;Aben&quot;</span>],</span><br><span class="line">  [<span class="string">&quot;age&quot;</span>, <span class="number">2</span>],</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>([...aben]) <span class="comment">// [ [ &#x27;name&#x27;, &#x27;Aben&#x27; ], [ &#x27;age&#x27;, 2 ] ]</span></span><br><span class="line"><span class="comment">// or</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>([...aben.<span class="title function_">entries</span>()]) <span class="comment">// [ [ &#x27;name&#x27;, &#x27;Aben&#x27; ], [ &#x27;age&#x27;, 2 ] ]</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>([...aben.<span class="title function_">keys</span>()]) <span class="comment">// [ &#x27;name&#x27;, &#x27;age&#x27; ]</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>([...aben.<span class="title function_">values</span>()]) <span class="comment">// [ &#x27;Aben&#x27;, 2 ]</span></span><br></pre></td></tr></table></figure>
+
+<p>猜謎小範例 :</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> question = <span class="keyword">new</span> <span class="title class_">Map</span>([</span><br><span class="line">  [<span class="string">&quot;question&quot;</span>, <span class="string">&quot;What is the cutest animal in the world?&quot;</span>],</span><br><span class="line">  [<span class="number">1</span>, <span class="string">&quot;ABen&quot;</span>],</span><br><span class="line">  [<span class="number">2</span>, <span class="string">&quot;ACat&quot;</span>],</span><br><span class="line">  [<span class="number">3</span>, <span class="string">&quot;ABird&quot;</span>],</span><br><span class="line">  [<span class="string">&quot;correct&quot;</span>, <span class="number">1</span>],</span><br><span class="line">  [<span class="literal">true</span>, <span class="string">&quot;Correct!&quot;</span>],</span><br><span class="line">  [<span class="literal">false</span>, <span class="string">&quot;Wrong!&quot;</span>],</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(question.<span class="title function_">get</span>(<span class="string">&quot;question&quot;</span>))</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> [key, value] <span class="keyword">of</span> question) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> key === <span class="string">&quot;number&quot;</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Answer <span class="subst">$&#123;key&#125;</span>: <span class="subst">$&#123;value&#125;</span>`</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> answer = <span class="title class_">Number</span>(<span class="title function_">prompt</span>(<span class="string">&quot;Your answer&quot;</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(answer)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(question.<span class="title function_">get</span>(question.<span class="title function_">get</span>(<span class="string">&quot;correct&quot;</span>) === answer))</span><br></pre></td></tr></table></figure>
+
+<h2 id="Map-的屬性與方法"><a href="#Map-的屬性與方法" class="headerlink" title="Map 的屬性與方法"></a>Map 的屬性與方法</h2><h3 id="size-1"><a href="#size-1" class="headerlink" title="size"></a>size</h3><p>回傳 Map 中的鍵值對數量。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> newMap = <span class="keyword">new</span> <span class="title class_">Map</span>()</span><br><span class="line"></span><br><span class="line">newMap.<span class="title function_">set</span>(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;ABen&quot;</span>).<span class="title function_">set</span>(<span class="number">2</span>, <span class="string">&quot;age&quot;</span>).<span class="title function_">set</span>(<span class="literal">true</span>, <span class="string">&quot;ABen is cute &lt;3&quot;</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(newMap.<span class="property">size</span>) <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="has-1"><a href="#has-1" class="headerlink" title="has()"></a>has()</h3><p>檢查 Map 中是否有指定的 key。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> newMap = <span class="keyword">new</span> <span class="title class_">Map</span>()</span><br><span class="line">newMap.<span class="title function_">set</span>(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;ABen&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(newMap.<span class="title function_">has</span>(<span class="string">&quot;name&quot;</span>)) <span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(newMap.<span class="title function_">has</span>(<span class="number">2</span>)) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="set"><a href="#set" class="headerlink" title="set()"></a>set()</h3><p>在 Map 中添加一個鍵值對，本身也會回傳更新後的 Map，所以可以進行鏈式調用。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> newMap = <span class="keyword">new</span> <span class="title class_">Map</span>()</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(newMap.<span class="title function_">set</span>(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;ABen&quot;</span>)) <span class="comment">// Map(1) &#123; &#x27;name&#x27; =&gt; &#x27;ABen&#x27; &#125;</span></span><br><span class="line"></span><br><span class="line">newMap.<span class="title function_">set</span>(<span class="number">2</span>, <span class="string">&quot;age&quot;</span>).<span class="title function_">set</span>(<span class="literal">true</span>, <span class="string">&quot;ABen is cute &lt;3&quot;</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(newMap) <span class="comment">// Map(3) &#123; &#x27;name&#x27; =&gt; &#x27;ABen&#x27;, 2 =&gt; &#x27;age&#x27;, true =&gt; &#x27;ABen is cute &lt;3&#x27; &#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="get"><a href="#get" class="headerlink" title="get()"></a>get()</h3><p>取得 Map 中特定 key 值所映射的 value。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> newMap = <span class="keyword">new</span> <span class="title class_">Map</span>()</span><br><span class="line"></span><br><span class="line">newMap.<span class="title function_">set</span>(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;ABen&quot;</span>) <span class="comment">// Map(1) &#123; &#x27;name&#x27; =&gt; &#x27;ABen&#x27; &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(newMap.<span class="title function_">get</span>(<span class="string">&quot;name&quot;</span>)) <span class="comment">// ABen</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="delete-1"><a href="#delete-1" class="headerlink" title="delete()"></a>delete()</h3><p>刪除指定 key 的鍵值對。回傳是否刪除。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> newMap = <span class="keyword">new</span> <span class="title class_">Map</span>()</span><br><span class="line"></span><br><span class="line">newMap.<span class="title function_">set</span>(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;ABen&quot;</span>) <span class="comment">// Map(1) &#123; &#x27;name&#x27; =&gt; &#x27;ABen&#x27; &#125;</span></span><br><span class="line"></span><br><span class="line">newMap.<span class="title function_">delete</span>(<span class="string">&quot;name&quot;</span>) <span class="comment">// Map(0) &#123;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="clear-1"><a href="#clear-1" class="headerlink" title="clear()"></a>clear()</h3><p>清除 Map 中所有鍵值對。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> newMap = <span class="keyword">new</span> <span class="title class_">Map</span>()</span><br><span class="line"></span><br><span class="line">newMap.<span class="title function_">set</span>(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;ABen&quot;</span>).<span class="title function_">set</span>(<span class="number">2</span>, <span class="string">&quot;age&quot;</span>).<span class="title function_">set</span>(<span class="literal">true</span>, <span class="string">&quot;ABen is cute &lt;3&quot;</span>)</span><br><span class="line"></span><br><span class="line">newMap.<span class="title function_">clear</span>()</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(newMap) <span class="comment">// Map(0) &#123;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://www.udemy.com/course/the-complete-javascript-course/">The Complete JavaScript Course 2023: From Zero to Expert!</a></li>
+<li><a target="_blank" rel="noopener" href="https://pjchender.dev/javascript/js-set/#%E9%99%A3%E5%88%97%E8%88%87%E9%9B%86%E5%90%88%E9%96%93%E8%BD%89%E6%8F%9B">[JS] JavaScript 集合（Set）</a></li>
+<li><a target="_blank" rel="noopener" href="https://pjchender.dev/javascript/js-map/">[JS] JavaScript Map</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/JavaScript-%E5%8F%AF%E9%81%B8%E9%8F%88-Optional-Chaining/" rel="prev" title="JavaScript - 可選鏈(Optional Chaining)">
+                  <i class="fa fa-chevron-left"></i> JavaScript - 可選鏈(Optional Chaining)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/%E5%89%8D%E7%AB%AF%E5%B0%8F%E6%8A%80%E5%B7%A7-%E9%A0%81%E9%9D%A2%E5%B9%B3%E6%BB%91%E6%BB%BE%E5%8B%95/" rel="next" title="前端小技巧 - 頁面平滑滾動">
+                  前端小技巧 - 頁面平滑滾動 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Sheng Feng Chang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

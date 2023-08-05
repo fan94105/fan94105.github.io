@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"fan94105.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.17.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="物件導向程式設計(Object-oriented programming，OOP)是一種以物件概念為基礎的程式撰寫方式，使用物件模擬現實生活中的事物。在 JS 中並不存在傳統 OOP 的類別(class)，而是以原型(prototype)實現物件導向。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript - 物件導向(Object-oriented programming，OOP)">
+<meta property="og:url" content="https://fan94105.github.io/JavaScript-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91-Object-oriented-programming/index.html">
+<meta property="og:site_name" content="Feng&#39;s Blog">
+<meta property="og:description" content="物件導向程式設計(Object-oriented programming，OOP)是一種以物件概念為基礎的程式撰寫方式，使用物件模擬現實生活中的事物。在 JS 中並不存在傳統 OOP 的類別(class)，而是以原型(prototype)實現物件導向。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-08-05T03:52:14.000Z">
+<meta property="article:modified_time" content="2023-08-05T03:52:14.838Z">
+<meta property="article:author" content="Sheng Feng Chang">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="OOP">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://fan94105.github.io/JavaScript-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91-Object-oriented-programming/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://fan94105.github.io/JavaScript-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91-Object-oriented-programming/","path":"JavaScript-物件導向-Object-oriented-programming/","title":"JavaScript - 物件導向(Object-oriented programming，OOP)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JavaScript - 物件導向(Object-oriented programming，OOP) | Feng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Feng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#OOP"><span class="nav-number">1.</span> <span class="nav-text">OOP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%8E%9F%E5%89%87"><span class="nav-number">1.2.</span> <span class="nav-text">基本原則</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OOP-in-JavaScript"><span class="nav-number">2.</span> <span class="nav-text">OOP in JavaScript</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A7%8B%E9%80%A0%E5%87%BD%E5%BC%8F-Constructor-function"><span class="nav-number">2.1.</span> <span class="nav-text">構造函式(Constructor function)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9C%E6%85%8B%E6%96%B9%E6%B3%95-static-method"><span class="nav-number">2.1.1.</span> <span class="nav-text">靜態方法(static method)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ES6-Classes"><span class="nav-number">2.2.</span> <span class="nav-text">ES6 Classes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9C%E6%85%8B%E6%96%B9%E6%B3%95-static-method-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">靜態方法(static method)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Getter-amp-Setter"><span class="nav-number">2.2.2.</span> <span class="nav-text">Getter &amp; Setter</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Object-create"><span class="nav-number">2.3.</span> <span class="nav-text">Object.create( )</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Sheng Feng Chang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/fan94105" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;fan94105" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://fan94105.github.io/JavaScript-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91-Object-oriented-programming/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Sheng Feng Chang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="JavaScript - 物件導向(Object-oriented programming，OOP) | Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript - 物件導向(Object-oriented programming，OOP)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-08-05 11:52:14" itemprop="dateCreated datePublished" datetime="2023-08-05T11:52:14+08:00">2023-08-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>物件導向程式設計(Object-oriented programming，OOP)是一種以物件概念為基礎的程式撰寫方式，使用物件模擬現實生活中的事物。在 JS 中並不存在傳統 OOP 的類別(class)，而是以原型(prototype)實現物件導向。</p>
+<span id="more"></span>
+
+<h1 id="OOP"><a href="#OOP" class="headerlink" title="OOP"></a>OOP</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>類別(class)可以視為定義物件的藍圖，其中包含事物的狀態(屬性)或行為(方法)。</p>
+<p>類別的實例(instance)就是透過類別這張藍圖所創建出來的物件。創建的過程稱為實例化(instantiation)。</p>
+<h2 id="基本原則"><a href="#基本原則" class="headerlink" title="基本原則"></a>基本原則</h2><p>設計類別的基本原則 :</p>
+<ul>
+<li><strong>抽象(Abstraction)</strong> : 忽視其他無關的細節，只專注於所要實施的部分，從而獲得事物的概觀，而非無關的細枝末節。</li>
+<li><strong>封裝(Encapsulation)</strong> : 在類別中擁有外部無法存取的私有屬性與方法。某些方法可以被暴露(exposed)作為公開介面(public interface)。<ul>
+<li>避免外部程式操作內部狀態(state)。</li>
+<li>改變內部程式時不會影響外部。</li>
+</ul>
+</li>
+<li><strong>繼承(Inheritance)</strong> : 使子類別可以存取父類別的屬性與方法，並與父類別形成階層結構。<ul>
+<li>可以減少重複的程式碼。</li>
+<li>更好的模擬現實事物之間的關係。</li>
+</ul>
+</li>
+<li><strong>多型(Polymorphism)</strong> : 子類別可以覆蓋從父類別繼承而來的方法。</li>
+</ul>
+<h1 id="OOP-in-JavaScript"><a href="#OOP-in-JavaScript" class="headerlink" title="OOP in JavaScript"></a>OOP in JavaScript</h1><p>JavaScript 中以原型(prototype)表示類別，而每一個物件都連結到原型物件，透過原型繼承(prototypal inheritance)使物件可以存取原型物件中的屬性及方法。</p>
+<blockquote>
+<p>JS 中原型繼承(prototypal inheritance)與 OOP 中繼承(inheritance)的差別 :</p>
+<ul>
+<li>原型繼承是物件實例繼承原型物件的屬性及方法，或者也可以說是實例物件將方法委託給原型物件。</li>
+<li>繼承是子類別繼承父類別的屬性及方法。</li>
+</ul>
+</blockquote>
+<p>三個實現原型繼承的方法 :</p>
+<ul>
+<li>構造函式(Constructor function) : 用於創建物件的函式，內建物件如 Array、Set 或 Map 就是以構造函式創建。</li>
+<li>ES6 Classes : 構造函式的語法糖。</li>
+<li>Object.create() : 連結原型物件最簡單且直接的方法。</li>
+</ul>
+<h2 id="構造函式-Constructor-function"><a href="#構造函式-Constructor-function" class="headerlink" title="構造函式(Constructor function)"></a>構造函式(Constructor function)</h2><p>構造函式可以使用函式聲明或是函式表達式，但不能使用箭頭函式，因為箭頭函示沒有 <code>this</code> 綁定。</p>
+<p>使用 <code>new</code> 執行 :</p>
+<ol>
+<li>創建一個物件。</li>
+<li>呼叫構造函式，<code>this</code> 綁訂為新物件。</li>
+<li>新物件連結到原型物件，設置 <code>__proto__</code> 屬性並指向構造函式的 <code>prototype</code> 屬性。</li>
+<li>構造函式回傳新物件，此物件即構造函式的實例。</li>
+</ol>
+<p>在構造函式中使用 <code>this</code> 添加屬性，而方法並不會定義於構造函式中，而是使用 <code>prototype</code> 屬性將方法添加於原型物件上，使用原型繼承的特性。如果將方法定義於構造函式，當創造出多個實例時，那麼每一個實例上都有相同的方法，這對於程式效能會產生很大的影響。</p>
+<p>範例 :</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Dog</span> = <span class="keyword">function</span> (<span class="params">firstName, birthYear</span>) &#123;</span><br><span class="line">  <span class="comment">//console.log(this) // Dog &#123;&#125;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 實例屬性(Instance properties)</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">firstName</span> = firstName</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">birthYear</span> = birthYear</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在 Dog.prototype 上添加屬性</span></span><br><span class="line"><span class="title class_">Dog</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">species</span> = <span class="string">&quot;C. familiaris&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 在 Dog.prototype 上添加方法</span></span><br><span class="line"><span class="title class_">Dog</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">calcAge</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">2023</span> - <span class="variable language_">this</span>.<span class="property">birthYear</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Dog</span>.<span class="property"><span class="keyword">prototype</span></span>) <span class="comment">// &#123;calcAge: f, constructor: f&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> aben = <span class="keyword">new</span> <span class="title class_">Dog</span>(<span class="string">&quot;ABen&quot;</span>, <span class="number">2021</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(aben) <span class="comment">// Dog &#123; firstName: &#x27;ABen&#x27;, birthYear: 2021 &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Dog 的實例物件通過原型呼叫 calcAge 函式</span></span><br><span class="line">aben.<span class="title function_">calcAge</span>() <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+
+<p>實例的 <code>__proto__</code> 屬性指向構造函式的 <code>prototype</code> 屬性。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Dog</span>.<span class="property"><span class="keyword">prototype</span></span> === aben.<span class="property">__proto__</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>可以使用 <code>isPrototypeOf()</code> 方法確認物件的原型，特別注意構造函式的 <code>prototype</code> 屬性並非指向構造函式的原型，而是指向構造函式創建的實例的原型。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Dog</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="title function_">isPrototypeOf</span>(aben)) <span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Dog</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="title function_">isPrototypeOf</span>(<span class="title class_">Dog</span>)) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>hasOwnProperty()</code> 方法確認屬性是否為實例屬性。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(aben.<span class="title function_">hasOwnProperty</span>(<span class="string">&quot;firstName&quot;</span>)) <span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(aben.<span class="title function_">hasOwnProperty</span>(<span class="string">&quot;species&quot;</span>)) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="靜態方法-static-method"><a href="#靜態方法-static-method" class="headerlink" title="靜態方法(static method)"></a>靜態方法(static method)</h3><p>靜態方法為依附在構造函式上的方法，不是在構造函式 <code>prototype</code> 屬性上的方法，所以只能由構造函示呼叫，而實例物件無法呼叫。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Dog</span> = <span class="keyword">function</span> (<span class="params">firstName, birthYear</span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">firstName</span> = firstName</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">birthYear</span> = birthYear</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// hey 方法存在於 Dog 構造函式中</span></span><br><span class="line"><span class="title class_">Dog</span>.<span class="property">hey</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Hey there 👋&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> aben = <span class="keyword">new</span> <span class="title class_">Dog</span>(<span class="string">&quot;Aben&quot;</span>, <span class="number">2021</span>)</span><br><span class="line"></span><br><span class="line">aben.<span class="title function_">hey</span>() <span class="comment">// Uncaught TypeError: aben.hey is not a function</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Dog</span>.<span class="title function_">hey</span>() <span class="comment">// Hey there 👋</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="ES6-Classes"><a href="#ES6-Classes" class="headerlink" title="ES6 Classes"></a>ES6 Classes</h2><p>JavaScript 中的 <code>class</code> 並不是 OOP 中的類別(class)，它只是構造函式的語法糖，作用與構造函式相同。</p>
+<p>語法 :</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// class declaration</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">className</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// class expression</span></span><br><span class="line"><span class="keyword">const</span> className = <span class="keyword">class</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>範例 :</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">firstName, birthYear</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">firstName</span> = firstName</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">birthYear</span> = birthYear</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">calcAge</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">2023</span> - <span class="variable language_">this</span>.<span class="property">birthYear</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> aben = <span class="keyword">new</span> <span class="title class_">Dog</span>(<span class="string">&quot;Aben&quot;</span>, <span class="number">2021</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(aben) <span class="comment">// Dog &#123; firstName: &#x27;Aben&#x27;, birthYear: 2021 &#125;</span></span><br><span class="line"></span><br><span class="line">aben.<span class="title function_">calcAge</span>() <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+
+<p><code>constructor()</code> 構造器為 <code>class</code> 中的方法，相當於構造函式。</p>
+<p><code>calcAge()</code> 方法會自動添加在 <code>Dog.prototype</code> 中。</p>
+<p><code>class</code> 的特性 :</p>
+<ul>
+<li>不會提升(hoisted)。</li>
+<li>為一等公民(first-class citizen)，表示可以做為函式參數，也可以被函式回傳。</li>
+<li>在內部執行嚴格模式(strict mode)。</li>
+</ul>
+<h3 id="靜態方法-static-method-1"><a href="#靜態方法-static-method-1" class="headerlink" title="靜態方法(static method)"></a>靜態方法(static method)</h3><p>在 <code>class</code> 語法中靜態方法以 <code>static</code> 表示。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">firstName, birthYear</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">firstName</span> = firstName</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">birthYear</span> = birthYear</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 實例方法(instance method)</span></span><br><span class="line">  <span class="title function_">calcAge</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">2023</span> - <span class="variable language_">this</span>.<span class="property">birthYear</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 靜態方法(static method)</span></span><br><span class="line">  <span class="keyword">static</span> <span class="title function_">hey</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Hey there 👋&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> aben = <span class="keyword">new</span> <span class="title class_">Dog</span>(<span class="string">&quot;Aben&quot;</span>, <span class="number">2021</span>)</span><br><span class="line"></span><br><span class="line">aben.<span class="title function_">hey</span>() <span class="comment">// Uncaught TypeError: aben.hey is not a function</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Dog</span>.<span class="title function_">hey</span>() <span class="comment">// Hey there 👋</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Getter-amp-Setter"><a href="#Getter-amp-Setter" class="headerlink" title="Getter &amp; Setter"></a>Getter &amp; Setter</h3><p>在 JS 物件中有兩種屬性，一般的屬性與存取器屬性(accessor property)。getter 與 setter 就屬於存取器屬性，本身其實是存取物件內數據的方法。</p>
+<p>兩者差異 :</p>
+<ul>
+<li>getter : 用於取得物件中對屬性進行計算後得到的數據。</li>
+<li>setter : 用於設定物件中的屬性。</li>
+</ul>
+<p>在一般的物件中使用 <code>get</code> 與 <code>set</code> 分別定義 getter 與 setter，使用時要注意它們是屬性而非方法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> account = &#123;</span><br><span class="line">  <span class="attr">owner</span>: <span class="string">&quot;ABen&quot;</span>,</span><br><span class="line">  <span class="attr">movements</span>: [<span class="number">200</span>, <span class="number">100</span>, <span class="number">120</span>],</span><br><span class="line"></span><br><span class="line">  <span class="keyword">get</span> <span class="title function_">latest</span>() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">movements</span>.<span class="title function_">slice</span>(-<span class="number">1</span>).<span class="title function_">pop</span>()</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="keyword">set</span> <span class="title function_">latest</span>(<span class="params">mov</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">movements</span>.<span class="title function_">push</span>(mov)</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(account.<span class="property">latest</span>) <span class="comment">// 120</span></span><br><span class="line"></span><br><span class="line">account.<span class="property">latest</span> = <span class="number">50</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(account.<span class="property">movements</span>) <span class="comment">// (4) [200, 100, 120, 50]</span></span><br></pre></td></tr></table></figure>
+
+<p>在 <code>class</code> 中 getter 與 setter 的使用方法與在一般物件中相同，且常用於驗證數據。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">fullName, birthYear</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">fullName</span> = fullName</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">birthYear</span> = birthYear</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">get</span> <span class="title function_">age</span>() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">2023</span> - <span class="variable language_">this</span>.<span class="property">birthYear</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">set</span> <span class="title function_">fullName</span>(<span class="params">name</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (name.<span class="title function_">includes</span>(<span class="string">&quot; &quot;</span>)) <span class="variable language_">this</span>.<span class="property">_fullName</span> = name</span><br><span class="line">    <span class="keyword">else</span> <span class="title function_">alert</span>(<span class="string">`<span class="subst">$&#123;name&#125;</span> is not a full name!`</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">get</span> <span class="title function_">fullName</span>() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">_fullName</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> aben = <span class="keyword">new</span> <span class="title class_">Dog</span>(<span class="string">&quot;Aben Chang&quot;</span>, <span class="number">2021</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(aben) <span class="comment">// Dog &#123;_fullName: &#x27;Aben Chang&#x27;, birthYear: 2021&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(aben.<span class="property">age</span>) <span class="comment">// 2</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(aben.<span class="property">fullName</span>) <span class="comment">// Aben Chang</span></span><br></pre></td></tr></table></figure>
+
+<p>上面程式中使用 setter 驗證名字是否為全名，當 <code>constructor()</code> 中執行 <code>this.fullName = fullName</code> 時，即執行同名 setter 檢查輸入是否為全名，若是全名則存於 <code>_fullName</code> 屬性。</p>
+<h2 id="Object-create"><a href="#Object-create" class="headerlink" title="Object.create( )"></a>Object.create( )</h2><p><code>Object.create()</code> 可以指定原型物件，也就是說將物件的 <code>__proto__</code> 屬性指向任何其他物件。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Dog</span> = &#123;</span><br><span class="line">  <span class="title function_">init</span>(<span class="params">firstName, birthYear</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">firstName</span> = firstName</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">birthYear</span> = birthYear</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="title function_">calcAge</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">2023</span> - <span class="variable language_">this</span>.<span class="property">birthYear</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> aben = <span class="title class_">Object</span>.<span class="title function_">create</span>(<span class="title class_">Dog</span>) <span class="comment">// &#123;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(aben.<span class="property">__proto__</span> === <span class="title class_">Dog</span>) <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">aben.<span class="title function_">init</span>(<span class="string">&quot;Aben&quot;</span>, <span class="number">2021</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(aben) <span class="comment">// &#123;firstName: &#x27;Aben&#x27;, birthYear: 2021&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面程式中 <code>Object.create()</code> 創建一個空物件，並指定 Dog 為其原型物件。通常設定原型屬性的方法是在原型物件中定義一個像是 <code>constructor()</code> 的函式，如程式碼中的 <code>init()</code>，盡量不要使用像是 <code>aben.firstName = &quot;ABen&quot;</code> 直接賦值的方法添加屬性。</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://www.udemy.com/course/the-complete-javascript-course/">The Complete JavaScript Course 2023: From Zero to Expert!</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Abstraction_(computer_science)">Wikipedia - Abstraction (computer science)</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/OOP/" rel="tag"># OOP</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/JavaScript-script-%E6%A8%99%E7%B1%A4%E5%B1%AC%E6%80%A7-async-defer/" rel="prev" title="JavaScript - script 標籤屬性(async & defer)">
+                  <i class="fa fa-chevron-left"></i> JavaScript - script 標籤屬性(async & defer)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/JavaScript-%E5%8E%9F%E5%9E%8B%E7%B9%BC%E6%89%BF-Prototypal-Inheritance-%E8%88%87%E5%8E%9F%E5%9E%8B%E9%8F%88-Prototype-Chain/" rel="next" title="JavaScript - 原型繼承(Prototypal Inheritance)與原型鏈(Prototype Chain)">
+                  JavaScript - 原型繼承(Prototypal Inheritance)與原型鏈(Prototype Chain) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Sheng Feng Chang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

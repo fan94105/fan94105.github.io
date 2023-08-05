@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"fan94105.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.17.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":"default","style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"fan94105.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.17.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="作用域定義 JavaScript 中變數的影響範圍。作用域鏈為作用域對父級作用域的引用形成的關聯。">
 <meta property="og:type" content="article">
@@ -27,7 +27,7 @@
 <meta property="og:description" content="作用域定義 JavaScript 中變數的影響範圍。作用域鏈為作用域對父級作用域的引用形成的關聯。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-07-08T12:32:19.000Z">
-<meta property="article:modified_time" content="2023-07-13T15:22:29.936Z">
+<meta property="article:modified_time" content="2023-07-28T08:32:22.039Z">
 <meta property="article:author" content="Sheng Feng Chang">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
@@ -129,6 +129,10 @@
 
         </div>
       </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
     </div>
 
     
@@ -178,13 +182,6 @@
       <span class="post-meta-item-text">Posted on</span>
 
       <time title="Created: 2023-07-08 20:32:19" itemprop="dateCreated datePublished" datetime="2023-07-08T20:32:19+08:00">2023-07-08</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-07-13 23:22:29" itemprop="dateModified" datetime="2023-07-13T23:22:29+08:00">2023-07-13</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -264,7 +261,11 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> name = <span class="string">&quot;ABen&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">boo</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> name = <span class="string">&quot;Black&quot;</span></span><br><span class="line">  <span class="title function_">foo</span>()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">boo</span>() <span class="comment">// ABen</span></span><br></pre></td></tr></table></figure>
 
 <p>上面的程式在全域作用域及函式作用域中分別各宣告一個 <code>name</code> 變數，在 boo 函式執行時調用了 foo 函式，因為 JavaScript 採用靜態範疇，所以當在 foo 中找不到 <code>name</code> 時，不會因為是在 boo 中被呼叫就使用 boo 中宣告的 <code>name</code>，而是向當前位置的父級範疇查找，最後就在全域中取得變數。</p>
-<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p><a target="_blank" rel="noopener" href="https://www.udemy.com/course/the-complete-javascript-course/">The Complete JavaScript Course 2023: From Zero to Expert!</a><br><a target="_blank" rel="noopener" href="https://medium.com/@anilakgunes/scope-lexical-environment-and-scope-chain-in-javascript-559aadb7dca8">Scope, Lexical Environment and Scope Chain in JavaScript</a><br><a target="_blank" rel="noopener" href="https://medium.com/itsems-frontend/javascript-scope-and-scope-chain-ca17a1068c96">[JavaScript] Javascript 的作用域 (Scope) 與範圍鏈 (Scope Chain)：往外找</a></p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://www.udemy.com/course/the-complete-javascript-course/">The Complete JavaScript Course 2023: From Zero to Expert!</a></li>
+<li><a target="_blank" rel="noopener" href="https://medium.com/@anilakgunes/scope-lexical-environment-and-scope-chain-in-javascript-559aadb7dca8">Scope, Lexical Environment and Scope Chain in JavaScript</a></li>
+<li><a target="_blank" rel="noopener" href="https://medium.com/itsems-frontend/javascript-scope-and-scope-chain-ca17a1068c96">[JavaScript] Javascript 的作用域 (Scope) 與範圍鏈 (Scope Chain)：往外找</a></li>
+</ul>
 
     </div>
 
@@ -327,10 +328,6 @@
     <span class="toggle-line"></span>
   </div>
   <div class="sidebar-dimmer"></div>
-  <div class="back-to-top" role="button" aria-label="Back to top">
-    <i class="fa fa-arrow-up fa-lg"></i>
-    <span>0%</span>
-  </div>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>

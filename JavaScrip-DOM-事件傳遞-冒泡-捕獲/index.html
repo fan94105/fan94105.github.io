@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"fan94105.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.17.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="當元素綁定的事件被觸發時，會經過三個階段，捕獲階段(CAPTURING_PHASE)、目標階段(AT_TARGET)與冒泡階段(BUBBLING_PHASE)。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript - DOM 事件傳遞(冒泡 &amp; 捕獲)">
+<meta property="og:url" content="https://fan94105.github.io/JavaScrip-DOM-%E4%BA%8B%E4%BB%B6%E5%82%B3%E9%81%9E-%E5%86%92%E6%B3%A1-%E6%8D%95%E7%8D%B2/index.html">
+<meta property="og:site_name" content="Feng&#39;s Blog">
+<meta property="og:description" content="當元素綁定的事件被觸發時，會經過三個階段，捕獲階段(CAPTURING_PHASE)、目標階段(AT_TARGET)與冒泡階段(BUBBLING_PHASE)。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://fan94105.github.io/JavaScrip-DOM-%E4%BA%8B%E4%BB%B6%E5%82%B3%E9%81%9E-%E5%86%92%E6%B3%A1-%E6%8D%95%E7%8D%B2/dom-bubbling.webp">
+<meta property="og:image" content="https://fan94105.github.io/JavaScrip-DOM-%E4%BA%8B%E4%BB%B6%E5%82%B3%E9%81%9E-%E5%86%92%E6%B3%A1-%E6%8D%95%E7%8D%B2/w3c-dom-event-flow.webp">
+<meta property="article:published_time" content="2023-07-31T09:34:00.000Z">
+<meta property="article:modified_time" content="2023-08-01T02:51:13.554Z">
+<meta property="article:author" content="Sheng Feng Chang">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="DOM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://fan94105.github.io/JavaScrip-DOM-%E4%BA%8B%E4%BB%B6%E5%82%B3%E9%81%9E-%E5%86%92%E6%B3%A1-%E6%8D%95%E7%8D%B2/dom-bubbling.webp">
+
+
+<link rel="canonical" href="https://fan94105.github.io/JavaScrip-DOM-%E4%BA%8B%E4%BB%B6%E5%82%B3%E9%81%9E-%E5%86%92%E6%B3%A1-%E6%8D%95%E7%8D%B2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://fan94105.github.io/JavaScrip-DOM-%E4%BA%8B%E4%BB%B6%E5%82%B3%E9%81%9E-%E5%86%92%E6%B3%A1-%E6%8D%95%E7%8D%B2/","path":"JavaScrip-DOM-事件傳遞-冒泡-捕獲/","title":"JavaScript - DOM 事件傳遞(冒泡 & 捕獲)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JavaScript - DOM 事件傳遞(冒泡 & 捕獲) | Feng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Feng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E5%82%B3%E9%81%9E"><span class="nav-number">1.</span> <span class="nav-text">事件傳遞</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%82%B3%E9%81%9E%E9%9A%8E%E6%AE%B5"><span class="nav-number">2.</span> <span class="nav-text">傳遞階段</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Sheng Feng Chang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/fan94105" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;fan94105" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://fan94105.github.io/JavaScrip-DOM-%E4%BA%8B%E4%BB%B6%E5%82%B3%E9%81%9E-%E5%86%92%E6%B3%A1-%E6%8D%95%E7%8D%B2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Sheng Feng Chang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="JavaScript - DOM 事件傳遞(冒泡 & 捕獲) | Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript - DOM 事件傳遞(冒泡 & 捕獲)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-07-31 17:34:00" itemprop="dateCreated datePublished" datetime="2023-07-31T17:34:00+08:00">2023-07-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>當元素綁定的事件被觸發時，會經過三個階段，捕獲階段(CAPTURING_PHASE)、目標階段(AT_TARGET)與冒泡階段(BUBBLING_PHASE)。</p>
+<span id="more"></span>
+
+<h1 id="事件傳遞"><a href="#事件傳遞" class="headerlink" title="事件傳遞"></a>事件傳遞</h1><p>首先看看事件傳遞的表現，在 HTML 中設定一個外部元素 <code>outer</code> 與內部元素 <code>inner</code>。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;outer&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;inner&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>將兩個元素分別綁定點擊事件。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> outer = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;.outer&quot;</span>)</span><br><span class="line"><span class="keyword">const</span> inner = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;.inner&quot;</span>)</span><br><span class="line"></span><br><span class="line">outer.<span class="title function_">addEventListener</span>(<span class="string">&quot;click&quot;</span>, <span class="function"><span class="params">e</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;outer&quot;</span>)</span><br><span class="line">&#125;)</span><br><span class="line">inner.<span class="title function_">addEventListener</span>(<span class="string">&quot;click&quot;</span>, <span class="function"><span class="params">e</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;inner&quot;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>執行的結果 :</p>
+<p><img src="/JavaScrip-DOM-%E4%BA%8B%E4%BB%B6%E5%82%B3%E9%81%9E-%E5%86%92%E6%B3%A1-%E6%8D%95%E7%8D%B2/dom-bubbling.webp" alt="事件傳遞的表現"></p>
+<p>可以發現，當內部元素 <code>inner</code> 被點擊時，在 console 中不只印出 “inner”，也印出了 “outer”，這顯示出當在觸發內部元素事件的同時，外部元素的相同事件也會一起被觸發。</p>
+<h1 id="傳遞階段"><a href="#傳遞階段" class="headerlink" title="傳遞階段"></a>傳遞階段</h1><p>DOM 事件傳遞分成三個階段 :</p>
+<ul>
+<li>捕獲階段(CAPTURING_PHASE) : 事件從 <code>window</code> 向下傳遞到目標元素的過程。</li>
+<li>目標階段(AT_TARGET) : 事件傳遞到目標本身。</li>
+<li>冒泡階段(BUBBLING_PHASE) : 事件由目標向上傳遞回 <code>window</code>。</li>
+</ul>
+<p><img src="/JavaScrip-DOM-%E4%BA%8B%E4%BB%B6%E5%82%B3%E9%81%9E-%E5%86%92%E6%B3%A1-%E6%8D%95%E7%8D%B2/w3c-dom-event-flow.webp" alt="DOM 事件傳遞示意圖"></p>
+<center>( 圖片來源 : W3C - event flow )</center>
+
+<p>在 <code>addEventListener()</code> 回調函式中，可以通過事件物件 <code>e</code> 的 <code>eventPhase</code> 屬性，確認當前事件在傳遞中的哪一個階段被觸發。</p>
+<p>而 <code>addEventListener()</code> 的第三個參數為 <code>useCapture</code>，意思是 listener 是否在捕獲階段被觸發。若為 <code>true</code>，即決定回調函式觸發於捕獲階段，為 <code>false</code> 則觸發於冒泡階段。</p>
+<p>用與上例相同的 HTML 結構，看看以下範例 :</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> outer = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;.outer&quot;</span>)</span><br><span class="line"><span class="keyword">const</span> inner = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;.inner&quot;</span>)</span><br><span class="line"></span><br><span class="line">outer.<span class="title function_">addEventListener</span>(</span><br><span class="line">  <span class="string">&quot;click&quot;</span>,</span><br><span class="line">  <span class="function"><span class="params">e</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;outer CAPTURING:&quot;</span>, e.<span class="property">eventPhase</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="literal">true</span></span><br><span class="line">)</span><br><span class="line">outer.<span class="title function_">addEventListener</span>(</span><br><span class="line">  <span class="string">&quot;click&quot;</span>,</span><br><span class="line">  <span class="function"><span class="params">e</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;outer BUBBLING:&quot;</span>, e.<span class="property">eventPhase</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="literal">false</span></span><br><span class="line">)</span><br><span class="line">inner.<span class="title function_">addEventListener</span>(</span><br><span class="line">  <span class="string">&quot;click&quot;</span>,</span><br><span class="line">  <span class="function"><span class="params">e</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;inner CAPTURING:&quot;</span>, e.<span class="property">eventPhase</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="literal">true</span></span><br><span class="line">)</span><br><span class="line">inner.<span class="title function_">addEventListener</span>(</span><br><span class="line">  <span class="string">&quot;click&quot;</span>,</span><br><span class="line">  <span class="function"><span class="params">e</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;inner BUBBLING:&quot;</span>, e.<span class="property">eventPhase</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="literal">false</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>當點擊內部元素 <code>inner</code> 後，得到的結果為 : ( <code>1</code> : 捕獲階段，<code>2</code> : 目標階段，<code>3</code> : 冒泡階段。)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&quot;outer CAPTURING:&quot; 1</span><br><span class="line">&quot;inner CAPTURING:&quot; 2</span><br><span class="line">&quot;inner BUBBLING:&quot; 2</span><br><span class="line">&quot;outer BUBBLING:&quot; 3</span><br></pre></td></tr></table></figure>
+
+<p>可以看到首先事件捕獲到外部元素 <code>outer</code>，接著來到目標元素 <code>inner</code>，最後再冒泡傳回 <code>outer</code>。</p>
+<p>而在過程中內部元素的 <code>eventPhase</code> 都是 <code>2</code>，也就是說當事件已經傳到目標身上進入目標階段(AT_TARGET)時，就沒有捕獲與冒泡的分別。</p>
+<iframe src="https://codepen.io/fan94105/embed/preview/GRwwNBM?default-tab=html,result&theme-id=light" width="%" height="}" frameborder="0" loading="lazy" allowfullscreen></iframe>
+
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://www.udemy.com/course/the-complete-javascript-course/">The Complete JavaScript Course 2023: From Zero to Expert!</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.techbridge.cc/2017/07/15/javascript-event-propagation/">DOM 的事件傳遞機制：捕獲與冒泡</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.w3.org/TR/DOM-Level-3-Events/#event-flow">W3C - event flow</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/DOM/" rel="tag"># DOM</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/JavaScript-DOM/" rel="prev" title="JavaScript - DOM">
+                  <i class="fa fa-chevron-left"></i> JavaScript - DOM
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/JavaScript-JS-Engine-and-Runtime/" rel="next" title="JavaScript - JS Engine and Runtime">
+                  JavaScript - JS Engine and Runtime <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Sheng Feng Chang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
