@@ -5,7 +5,9 @@ tags:
   - OOP
 categories:
   - JavaScript
+date: 2023-08-05 11:52:14
 ---
+
 
 物件導向程式設計(Object-oriented programming，OOP)是一種以物件概念為基礎的程式撰寫方式，使用物件模擬現實生活中的事物。在 JS 中並不存在傳統 OOP 的類別(class)，而是以原型(prototype)實現物件導向。
 
@@ -168,11 +170,11 @@ aben.calcAge() // 2
 
 `calcAge()` 方法會自動添加在 `Dog.prototype` 中。
 
-要特別注意 :
+`class` 的特性 :
 
-- `class` 不會提升(hoisted)。
-- `class` 是一等公民(first-class citizen)，表示它可以做為函式參數，也可以被函式回傳。
-- `class` 內部執行嚴格模式(strict mode)。
+- 不會提升(hoisted)。
+- 為一等公民(first-class citizen)，表示可以做為函式參數，也可以被函式回傳。
+- 在內部執行嚴格模式(strict mode)。
 
 ### 靜態方法(static method)
 

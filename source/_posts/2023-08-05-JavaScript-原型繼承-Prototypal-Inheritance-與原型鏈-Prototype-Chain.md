@@ -2,8 +2,10 @@
 title: JavaScript - 原型繼承(Prototypal Inheritance)與原型鏈(Prototype Chain)
 tags:
   - JavaScript
+  - OOP
 categories:
   - JavaScript
+date: 2023-08-05 11:52:46
 ---
 
 <!-- more -->
@@ -86,7 +88,7 @@ aben.calcAge() // 2
 aben.introduce() // My name is ABen and I can bark at strangers.
 ```
 
-使用 `extends` 擴展類別作為子類別的父類，並於子類別的 `constructor()` 函式中呼叫 `super()` 方法，自動呼叫父類別的 `constructor()` 函式。
+使用 `extends` 擴展類別作為子類別的父類，並於子類別的 `constructor()` 函式中呼叫 `super()` 方法，相當於自動執行父類別的 `constructor()` 函式。
 
 若子類別中只有與父類別相同的屬性，沒有新增自己的屬性，就可以不用定義 `constructor()` 函式，子類別會自動調用父類別的 `constructor()`。
 
@@ -130,6 +132,16 @@ aben.introduce() // My name is ABen and I can bark at strangers.
 ![Object.create() 物件間的原型鏈圖](object-create-prototypal-inheritance.webp)
 
 # 原型鏈(Prototype Chain)
+
+原型鏈圖 :
+
+![原型鏈圖](prototype-chain.webp)
+
+重點整理 :
+
+- 實例的隱式原型 `__proto__` 屬性等於構造函式的顯式原型 `prototype` 屬性。
+- 所有函式的 `prototype` 屬性默認指向一個空物件，但 `Object` 除外。
+- 所有函式都是 `Function` 的實例，包括 `Function` 本身。
 
 # 參考資料
 
